@@ -4,6 +4,7 @@ using BasketballApp.Application.Profiles;
 using BasketballApp.Application.Services;
 using BasketballApp.Infrastructure.DbContexts;
 using BasketballApp.Infrastructure.Services.Repositories;
+using BasketballApp.Infrustructure.Services.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -19,16 +20,19 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<IUserContract, UserContract>();
+builder.Services.AddTransient<ITeamContract, TeamContract>();
 builder.Services.AddTransient<IJwtService, JwtService>();
 
 builder.Services.AddDbContext<BasketballAppContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("BasketballAppDBConnectionString")));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ITeamRepository, TeamRepository>();
 
 
 var mapperConfig = new MapperConfiguration(mc =>
 {
     mc.AddProfile(new UserProfile());
+    mc.AddProfile(new TeamProfile());
 });
 
 IMapper mapper = mapperConfig.CreateMapper();

@@ -20,16 +20,16 @@ namespace BasketballApp.API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<TeamDto>> GetAllTeams()
         {
-            var teams = _teamContract.GetAllTeams();
+            var teams = _teamContract.GetAllTeams().Result;
 
             return Ok(teams);
 
         }
 
         [HttpGet("{teamId}")]
-        public ActionResult<TeamDto> GetTeamByTeamId(int teamId, bool includePlayers, bool includeCoaches)
+        public ActionResult<TeamDto> GetTeamByTeamId([FromRoute] int teamId, bool includePlayers, bool includeCoaches)
         {
-            var team = _teamContract.GetTeamByTeamId(teamId, includePlayers, includeCoaches);
+            var team = _teamContract.GetTeamByTeamId(teamId, includePlayers, includeCoaches).Result;
 
             if(team == null)
             {
