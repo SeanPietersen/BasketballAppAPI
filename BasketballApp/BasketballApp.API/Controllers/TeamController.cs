@@ -25,5 +25,18 @@ namespace BasketballApp.API.Controllers
             return Ok(teams);
 
         }
+
+        [HttpGet("{teamId}")]
+        public ActionResult<TeamDto> GetTeamByTeamId(int teamId, bool includePlayers, bool includeCoaches)
+        {
+            var team = _teamContract.GetTeamByTeamId(teamId, includePlayers, includeCoaches);
+
+            if(team == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(team);
+        }
     }
 }

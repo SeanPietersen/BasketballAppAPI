@@ -9,6 +9,9 @@ namespace BasketballApp.Application.Profiles
         public TeamProfile()
         {
             CreateMap<Team, TeamDto>();
+            CreateMap<Team, TeamWithPlayersAndCoachesDto>();
+            CreateMap<Team, TeamWithPlayersDto>();
+            CreateMap<Team, TeamWithCoachesDto>();
         }
     }
 }

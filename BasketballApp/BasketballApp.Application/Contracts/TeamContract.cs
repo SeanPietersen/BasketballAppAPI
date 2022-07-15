@@ -19,5 +19,32 @@ namespace BasketballApp.Application.Contracts
 
             return _mapper.Map<IEnumerable<TeamDto>>(teamEntities);
         }
+
+        public async Task<TeamDto> GetTeamByTeamId(int teamId, bool includePlayers = false, bool includeCoaches = false)
+        {
+            var team = await _teamRepository.GetTeamByTeamIdAsync(teamId, includePlayers, includeCoaches);
+
+            if(team == null)
+            {
+                return null;
+            }
+            
+            if(includePlayers && includeCoaches)
+            {
+                return (_mapper.Map<TeamWithPlayersAndCoachesDto>(team));
+            }
+
+            if(includePlayers)
+            {
+                return (_mapper.Map<TeamWithPlayersDto>(team));
+            }
+
+            if(includeCoaches)
+            {
+                return (_mapper.Map<TeamWithCoachesDto>(team));
+            }
+
+            return (_mapper.Map<TeamDto>(team));
+        }
     }
 }

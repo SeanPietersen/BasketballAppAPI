@@ -14,6 +14,7 @@ namespace BasketballApp.Tests
                 var mappingConfig = new MapperConfiguration(mc =>
                 {
                     mc.AddProfile(new UserProfile());
+                    mc.AddProfile(new TeamProfile());
                 });
                 IMapper mapper = mappingConfig.CreateMapper();
                 _mapper = mapper;

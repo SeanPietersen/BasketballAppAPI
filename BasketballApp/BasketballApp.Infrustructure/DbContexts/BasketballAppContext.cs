@@ -1,4 +1,5 @@
 ﻿using BasketballApp.Domain;
+using BasketballApp.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace BasketballApp.Infrastructure.DbContexts
@@ -7,6 +8,8 @@ namespace BasketballApp.Infrastructure.DbContexts
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Team> Teams { get; set; }
+        public DbSet<Player> Players { get; set; }
+        public DbSet<Coach> Coaches { get; set; }
 
         public BasketballAppContext(DbContextOptions<BasketballAppContext> options)
         : base(options)
@@ -123,6 +126,242 @@ namespace BasketballApp.Infrastructure.DbContexts
                     State = "Massachusetts"
                 });
 
+            //Adding players
+            modelBuilder.Entity<Player>().HasData(
+                new Player()
+                {
+                    PlayerId = 1,
+                    FirstName = "Stephan",
+                    LastName = "Curry",
+                    DateOfBirth = new DateTime(1998, 3, 14),
+                    PlayerHeight = 1.89,
+                    PlayerWeight = 83.9,
+                    TeamId = 3
+                },
+                new Player()
+                {
+                    PlayerId = 2,
+                    FirstName = "Lebron",
+                    LastName = "James",
+                    DateOfBirth = new DateTime(1984, 12, 30),
+                    PlayerHeight = 2.10,
+                    PlayerWeight = 113.4,
+                    TeamId = 1
+                },
+                new Player()
+                {
+                    PlayerId = 3,
+                    FirstName = "Kawhi",
+                    LastName = "Leonard",
+                    DateOfBirth = new DateTime(1991, 6, 29),
+                    PlayerHeight = 2.04,
+                    PlayerWeight = 102.1,
+                    TeamId = 2
+                },
+                new Player()
+                {
+                    PlayerId = 4,
+                    FirstName = "Devin",
+                    LastName = "Booker",
+                    DateOfBirth = new DateTime(1996, 10, 30),
+                    PlayerHeight = 1.98,
+                    PlayerWeight = 93.4,
+                    TeamId = 4
+                },
+                new Player()
+                {
+                    PlayerId = 5,
+                    FirstName = "Nikola",
+                    LastName = "Jokic",
+                    DateOfBirth = new DateTime(1995, 2, 19),
+                    PlayerHeight = 2.2,
+                    PlayerWeight = 128.8,
+                    TeamId = 5
+                },
+                new Player()
+                {
+                    PlayerId = 6,
+                    FirstName = "Jimmy",
+                    LastName = "Butler",
+                    DateOfBirth = new DateTime(1989, 8, 14),
+                    PlayerHeight = 2.04,
+                    PlayerWeight = 104.3,
+                    TeamId = 6
+                },
+                new Player()
+                {
+                    PlayerId = 7,
+                    FirstName = "Gary",
+                    LastName = "Harris",
+                    DateOfBirth = new DateTime(1994, 9, 14),
+                    PlayerHeight = 1.95,
+                    PlayerWeight = 95.3,
+                    TeamId = 7
+                },
+                new Player()
+                {
+                    PlayerId = 8,
+                    FirstName = "Trey",
+                    LastName = "Young",
+                    DateOfBirth = new DateTime(1998, 9, 19),
+                    PlayerHeight = 1.86,
+                    PlayerWeight = 74.4,
+                    TeamId = 8
+                },
+                new Player()
+                {
+                    PlayerId = 9,
+                    FirstName = "Lonzo",
+                    LastName = "Ball",
+                    DateOfBirth = new DateTime(1997, 10, 27),
+                    PlayerHeight = 2.01,
+                    PlayerWeight = 86.2,
+                    TeamId = 9
+                },
+                new Player()
+                {
+                    PlayerId = 10,
+                    FirstName = "Jayson",
+                    LastName = "Tatum",
+                    DateOfBirth = new DateTime(1998, 3, 3),
+                    PlayerHeight = 2.07,
+                    PlayerWeight = 95.3,
+                    TeamId = 10
+                });
+
+            //Adding Coaches
+            modelBuilder.Entity<Coach>().HasData(
+                new Coach()
+                {
+                    CoachId = 1,
+                    FirstName = "Steve",
+                    LastName = "Kerr",
+                    YearsOfExperience = 10,
+                    IsQualified = true,
+                    Rank = RankType.Head_Coach,
+                    TeamId = 3
+                },
+                new Coach()
+                {
+                    CoachId = 2,
+                    FirstName = "Mike",
+                    LastName = "Brown",
+                    YearsOfExperience = 5,
+                    IsQualified = true,
+                    Rank = RankType.Assistant_Coach,
+                    TeamId = 3
+                },
+                new Coach()
+                {
+                    CoachId = 3,
+                    FirstName = "Frank",
+                    LastName = "Vogel",
+                    YearsOfExperience = 2,
+                    IsQualified = false,
+                    Rank = RankType.Head_Coach,
+                    TeamId = 1
+                },
+                new Coach()
+                {
+                    CoachId = 4,
+                    FirstName = "Mike",
+                    LastName = "Penberthy",
+                    YearsOfExperience = 15,
+                    IsQualified = true,
+                    Rank = RankType.Assistant_Coach,
+                    TeamId = 3
+                },
+                new Coach()
+                {
+                    CoachId = 5,
+                    FirstName = "Tyronn",
+                    LastName = "Lue",
+                    YearsOfExperience = 15,
+                    IsQualified = true,
+                    Rank = RankType.Head_Coach,
+                    TeamId = 2
+                },
+                new Coach()
+                {
+                    CoachId = 6,
+                    FirstName = "Jason",
+                    LastName = "Powell",
+                    YearsOfExperience = 1,
+                    IsQualified = false,
+                    Rank = RankType.Technical_Coach,
+                    TeamId = 2
+                },
+                new Coach()
+                {
+                    CoachId = 7,
+                    FirstName = "Mike",
+                    LastName = "Penberthy",
+                    YearsOfExperience = 15,
+                    IsQualified = true,
+                    Rank = RankType.Assistant_Coach,
+                    TeamId = 3
+                },
+                new Coach()
+                {
+                    CoachId = 8,
+                    FirstName = "Kevin",
+                    LastName = "Young",
+                    YearsOfExperience = 1,
+                    IsQualified = false,
+                    Rank = RankType.Assistant_Coach,
+                    TeamId = 4
+                },
+                new Coach()
+                {
+                    CoachId = 9,
+                    FirstName = "Erik",
+                    LastName = "Spoelstra",
+                    YearsOfExperience = 5,
+                    IsQualified = true,
+                    Rank = RankType.Head_Coach,
+                    TeamId = 6
+                },
+                new Coach()
+                {
+                    CoachId = 10,
+                    FirstName = "Nate",
+                    LastName = "McMillan",
+                    YearsOfExperience = 2,
+                    IsQualified = false,
+                    Rank = RankType.Head_Coach,
+                    TeamId = 8
+                },
+                new Coach()
+                {
+                    CoachId = 11,
+                    FirstName = "Todd",
+                    LastName = "Campbell",
+                    YearsOfExperience = 1,
+                    IsQualified = false,
+                    Rank = RankType.Technical_Coach,
+                    TeamId = 9
+                },
+                new Coach()
+                {
+                    CoachId = 12,
+                    FirstName = "Ime",
+                    LastName = "Udoka",
+                    YearsOfExperience = 4,
+                    IsQualified = false,
+                    Rank = RankType.Head_Coach,
+                    TeamId = 10
+                },
+                new Coach()
+                {
+                    CoachId = 13,
+                    FirstName = "Ben",
+                    LastName = "Sullivan",
+                    YearsOfExperience = 6,
+                    IsQualified = true,
+                    Rank = RankType.Assistant_Coach,
+                    TeamId = 10
+                });
+
             base.OnModelCreating(modelBuilder);
         }
     }
@@ -134,9 +373,9 @@ namespace BasketballApp.Infrastructure.DbContexts
 * | DATE USED  |   NAME                        |  Created Date & Purpose
 * ====================================================================================================================================
 * |            |   Zosma                       | 2022-07-11 - Initial migration adding users to database.
-* |            |   Zibal                       | 2022=07-11 - Changing passwords for users in databse.
-* |            |   Zavijava                    | 2022-07-15 - Adding team entities to my database
-* |            |   Zaurak                      | 
+* |            |   Zibal                       | 2022=07-11 - Changing passwords for users in database.
+* |            |   Zavijava                    | 2022-07-15 - Adding team entities to the database.
+* |            |   Zaurak                      | 2022-07-15 - Adding player and coach entities to the database.
 * |            |   Zaniah                      | 
 * |            |   Yildun                      | 
 * |            |   Yed_Prior                   | 
