@@ -6,6 +6,7 @@ namespace BasketballApp.Infrastructure.DbContexts
     public class BasketballAppContext : DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<Team> Teams { get; set; }
 
         public BasketballAppContext(DbContextOptions<BasketballAppContext> options)
         : base(options)
@@ -59,6 +60,68 @@ namespace BasketballApp.Infrastructure.DbContexts
                     Password = "Rumer1234"
                 });
 
+            //Adding Teams
+            modelBuilder.Entity<Team>().HasData(
+                new Team()
+                {
+                    TeamId = 1,
+                    Name = "Los Angeles Lakers",
+                    State = "Claifornia"
+                },
+                new Team()
+                {
+                    TeamId = 2,
+                    Name = "Los Angeles Clippers",
+                    State = "Claifornia"
+                },
+                new Team()
+                {
+                    TeamId = 3,
+                    Name = "Golden State Warriors",
+                    State = "Claifornia"
+                },
+                new Team()
+                {
+                    TeamId = 4,
+                    Name = "Phoenix Suns",
+                    State = "Arizona"
+                },
+                new Team()
+                {
+                    TeamId = 5,
+                    Name = "Denvor Nuggets",
+                    State = "Colorado"
+                },
+                new Team()
+                {
+                    TeamId = 6,
+                    Name = "Miami Heat",
+                    State = "Florida"
+                },
+                new Team()
+                {
+                    TeamId = 7,
+                    Name = "Orlando Magic",
+                    State = "Florida"
+                },
+                new Team()
+                {
+                    TeamId = 8,
+                    Name = "Atlanta Hawks",
+                    State = "Georgia"
+                },
+                new Team()
+                {
+                    TeamId = 9,
+                    Name = "Chicago Bulls",
+                    State = "Illinois"
+                },
+                new Team()
+                {
+                    TeamId = 10,
+                    Name = "Boston Celtics",
+                    State = "Massachusetts"
+                });
 
             base.OnModelCreating(modelBuilder);
         }
@@ -72,7 +135,7 @@ namespace BasketballApp.Infrastructure.DbContexts
 * ====================================================================================================================================
 * |            |   Zosma                       | 2022-07-11 - Initial migration adding users to database.
 * |            |   Zibal                       | 2022=07-11 - Changing passwords for users in databse.
-* |            |   Zavijava                    | 
+* |            |   Zavijava                    | 2022-07-15 - Adding team entities to my database
 * |            |   Zaurak                      | 
 * |            |   Zaniah                      | 
 * |            |   Yildun                      | 
