@@ -21,18 +21,21 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<IUserContract, UserContract>();
 builder.Services.AddTransient<ITeamContract, TeamContract>();
+builder.Services.AddTransient<IPlayerContract, PlayerContract>();
 builder.Services.AddTransient<IJwtService, JwtService>();
 
 builder.Services.AddDbContext<BasketballAppContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("BasketballAppDBConnectionString")));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITeamRepository, TeamRepository>();
+builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();
 
 
 var mapperConfig = new MapperConfiguration(mc =>
 {
     mc.AddProfile(new UserProfile());
     mc.AddProfile(new TeamProfile());
+    mc.AddProfile(new PlayerProfile());
 });
 
 IMapper mapper = mapperConfig.CreateMapper();
