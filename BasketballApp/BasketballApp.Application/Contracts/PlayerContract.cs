@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
 using BasketballApp.Application.Dto;
 using BasketballApp.Infrustructure.Services.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BasketballApp.Application.Contracts
 {
@@ -23,15 +18,34 @@ namespace BasketballApp.Application.Contracts
         }
         public IEnumerable<PlayerDto> GetAllPlayersForTeam(int teamId)
         {
-            var team = _teamRepository.GetTeamByTeamIdAsync(teamId, true, false).Result;
+            var team = _teamRepository.GetTeamByIdAsync(teamId, true, false).Result;
 
-            if(team == null)
+            if (team == null)
             {
                 return null;
             }
 
             var players = team.Players;
             return (_mapper.Map<IEnumerable<PlayerDto>>(players));
+        }
+
+        public PlayerDto GetPlayerById(int teamId, int playerId)
+        {
+            var team = _teamRepository.GetTeamByIdAsync(teamId, true, false).Result;
+
+            if (team == null)
+            {
+                return null;
+            }
+
+            var player = _playerRepository.GetPlayerByIdAsync(teamId, playerId).Result;
+
+            if (player == null)
+            {
+                return null;
+            }
+
+            return _mapper.Map<PlayerDto>(player);
         }
     }
 }

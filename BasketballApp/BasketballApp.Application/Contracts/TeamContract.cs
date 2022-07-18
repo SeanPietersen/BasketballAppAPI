@@ -22,7 +22,7 @@ namespace BasketballApp.Application.Contracts
 
         public async Task<TeamDto> GetTeamByTeamId(int teamId, bool includePlayers = false, bool includeCoaches = false)
         {
-            var team = await _teamRepository.GetTeamByTeamIdAsync(teamId, includePlayers, includeCoaches);
+            var team = await _teamRepository.GetTeamByIdAsync(teamId, includePlayers, includeCoaches);
 
             if(team == null)
             {

@@ -17,7 +17,7 @@ namespace BasketballApp.Infrustructure.Services.Repositories
             return await _context.Teams.OrderBy(name => name.Name).ToListAsync();
         }
 
-        public async Task<Team> GetTeamByTeamIdAsync(int teamId, bool includePlayers = false, bool includeCoaches = false)
+        public async Task<Team> GetTeamByIdAsync(int teamId, bool includePlayers = false, bool includeCoaches = false)
         {
             if (includePlayers && includeCoaches)
             {

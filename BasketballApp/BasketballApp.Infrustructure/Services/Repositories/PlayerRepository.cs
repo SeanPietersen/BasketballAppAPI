@@ -14,7 +14,12 @@ namespace BasketballApp.Infrustructure.Services.Repositories
         }
         public async Task<IEnumerable<Player>> GetAllPlayersForTeamAsync(int teamId)
         {
-            return await _context.Players.Where(prop => prop.TeamId == teamId).ToListAsync();
+            return await _context.Players.Where(team => team.TeamId == teamId).ToListAsync();
+        }
+
+        public async Task<Player> GetPlayerByIdAsync(int teamId, int playerId)
+        {
+            return await _context.Players.Where(team => team.TeamId == teamId && team.PlayerId == playerId).FirstOrDefaultAsync();
         }
     }
 }

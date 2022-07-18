@@ -118,7 +118,7 @@ namespace BasketballApp.Tests
             //Arrange
             var teamId = 0;
 
-            _teamRepository.GetTeamByTeamIdAsync(teamId, false, false).ReturnsNull();
+            _teamRepository.GetTeamByIdAsync(teamId, false, false).ReturnsNull();
 
             //Act
             var actual = await _teamContract.GetTeamByTeamId(teamId);
@@ -142,7 +142,7 @@ namespace BasketballApp.Tests
 
             };
 
-            _teamRepository.GetTeamByTeamIdAsync(teamId, false, false).Returns(teamInDb);
+            _teamRepository.GetTeamByIdAsync(teamId, false, false).Returns(teamInDb);
 
             //Act
             var actual = await _teamContract.GetTeamByTeamId(teamId);
