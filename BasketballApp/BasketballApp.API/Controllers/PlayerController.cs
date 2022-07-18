@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BasketballApp.API.Controllers
 {
-    [Route("api/teams/{teamId}/player")]
+    [Route("api/teams/{teamId}/players")]
     [Authorize]
     [ApiController]
     public class PlayerController : Controller
