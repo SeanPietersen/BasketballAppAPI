@@ -12,6 +12,7 @@ namespace BasketballApp.Application.Profiles
             CreateMap<Team, TeamWithPlayersAndCoachesDto>();
             CreateMap<Team, TeamWithPlayersDto>();
             CreateMap<Team, TeamWithCoachesDto>();
+            CreateMap<CreateTeamDto, Team>();
         }
     }
 }

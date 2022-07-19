@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BasketballApp.Application.Dto;
+using BasketballApp.Domain;
 using BasketballApp.Infrustructure.Services.Repositories;
 
 namespace BasketballApp.Application.Contracts
@@ -13,6 +14,7 @@ namespace BasketballApp.Application.Contracts
             _teamRepository = teamRepository;
             _mapper = mapper;
         }
+
         public async Task<IEnumerable<TeamDto>> GetAllTeams()
         {
             var teamEntities = await _teamRepository.GetAllTeamsAsync();
@@ -45,6 +47,27 @@ namespace BasketballApp.Application.Contracts
             }
 
             return (_mapper.Map<TeamDto>(team));
+        }
+
+        public async Task<TeamDto> CreateTeam(CreateTeamDto teamDto)
+        {
+            var teamEntity = await _teamRepository.GetTeamByNameAsync(teamDto.Name);
+
+            if (teamEntity!= null)
+            {
+                // team exists
+                return null;
+            }
+
+            var createdTeam = new Team()
+            {
+                Name = teamDto.Name,
+                State = teamDto.State,
+            };
+
+            await _teamRepository.CreateTeamAsync(createdTeam);
+
+            return _mapper.Map<TeamDto>(createdTeam);
         }
     }
 }

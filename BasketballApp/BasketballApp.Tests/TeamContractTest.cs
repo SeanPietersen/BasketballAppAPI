@@ -1,4 +1,5 @@
 ﻿using BasketballApp.Application.Contracts;
+using BasketballApp.Application.Dto;
 using BasketballApp.Domain;
 using BasketballApp.Domain.Enums;
 using BasketballApp.Infrustructure.Services.Repositories;
@@ -149,6 +150,67 @@ namespace BasketballApp.Tests
 
             //Assert
             Assert.Equal(teamInDb.Name, actual.Name);
+        }
+
+        [Fact]
+        public void CreateTeam_ShouldReturnNull_TeamExists()
+        {
+            //Arrange
+            var teamInDb = new Team()
+            {
+                TeamId = 1,
+                Name = "Cape Town Tigers",
+                State = "Western Cape"
+
+            };
+
+            CreateTeamDto teamDto = new CreateTeamDto()
+            {
+                Name = "Cape Town Tigers",
+                State = "Western Cape"
+            };
+
+            _teamRepository.GetTeamByNameAsync(teamDto.Name).Returns(teamInDb);
+
+            //Act
+            TeamDto actual = _teamContract.CreateTeam(teamDto).Result;
+
+            //Assert
+            Assert.Null(actual);
+        }
+
+        [Fact]
+        public void CreateTeam_IsSuccessful()
+        {
+            //Arrange
+            var teamInDb = new Team()
+            {
+                TeamId = 1,
+                Name = "Cape Town Tigers",
+                State = "Western Cape"
+
+            };
+
+            CreateTeamDto teamDto = new CreateTeamDto()
+            {
+                Name = "Egoli Magic",
+                State = "Gauteng"
+            };
+            Team team = new Team()
+            {
+                Name = "Egoli Magic",
+                State = "Gauteng"
+            };
+
+            _teamRepository.GetTeamByNameAsync(teamDto.Name).ReturnsNull();
+            _teamRepository.CreateTeamAsync(Arg.Any<Team>());
+
+            //Act
+            TeamDto actual = _teamContract.CreateTeam(teamDto).Result;
+
+            //Assert
+            Assert.Equal(team.Name, actual.Name);
+            Assert.Equal(team.State, actual.State);
         }
 
     }

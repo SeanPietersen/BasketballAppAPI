@@ -38,5 +38,13 @@ namespace BasketballApp.API.Controllers
 
             return Ok(team);
         }
+
+        [HttpPost("addTeam")]
+        public ActionResult<TeamDto> CreateTeam([FromBody] CreateTeamDto teamRequest)
+        {
+            var teamToCreate = _teamContract.CreateTeam(teamRequest).Result;
+
+            return Ok(teamToCreate);
+        }
     }
 }

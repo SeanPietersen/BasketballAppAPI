@@ -12,6 +12,7 @@ namespace BasketballApp.Infrustructure.Services.Repositories
         {
             _context = context;
         }
+
         public async Task<IEnumerable<Team>> GetAllTeamsAsync()
         {
             return await _context.Teams.OrderBy(name => name.Name).ToListAsync();
@@ -37,6 +38,30 @@ namespace BasketballApp.Infrustructure.Services.Repositories
                     .Where(team => team.TeamId == teamId).FirstOrDefaultAsync();
             }
             return await _context.Teams.Where(team => team.TeamId == teamId).FirstOrDefaultAsync();
+        }
+
+        public async Task<Team> CreateTeamAsync(Team team)
+        {
+            var entity = await _context.Teams.AddAsync(team);
+
+            if (entity.State == EntityState.Added)
+            {
+                _context.SaveChanges();
+            }
+
+            return entity.Entity;
+        }
+
+        public async Task<Team> GetTeamByNameAsync(string name)
+        {
+            try
+            {
+                return await _context.Teams.Where(s => s.Name == name).FirstOrDefaultAsync<Team>();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }
