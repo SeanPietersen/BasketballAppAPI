@@ -49,14 +49,18 @@ namespace BasketballApp.Application.Contracts
             return (_mapper.Map<TeamDto>(team));
         }
 
-        public async Task<TeamDto> CreateTeam(CreateTeamDto teamDto)
+        public async Task<ApiResult<TeamDto>> CreateTeam(CreateTeamDto teamDto)
         {
             var teamEntity = await _teamRepository.GetTeamByNameAsync(teamDto.Name);
 
             if (teamEntity!= null)
             {
                 // team exists
-                return null;
+                return new ApiResult<TeamDto>()
+                {
+                    IsSuccess = false,
+                    Errors = new string[] { "Team Already Exists" }
+                };
             }
 
             var createdTeam = new Team()
@@ -67,7 +71,13 @@ namespace BasketballApp.Application.Contracts
 
             await _teamRepository.CreateTeamAsync(createdTeam);
 
-            return _mapper.Map<TeamDto>(createdTeam);
+            var createdTeamResult = _mapper.Map<TeamDto>(createdTeam);
+
+            return new ApiResult<TeamDto>()
+            {
+                IsSuccess = true,
+                Body = createdTeamResult
+            };
         }
     }
 }
