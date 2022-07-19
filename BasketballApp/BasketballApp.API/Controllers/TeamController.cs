@@ -44,6 +44,11 @@ namespace BasketballApp.API.Controllers
         {
             var teamToCreate = _teamContract.CreateTeam(teamRequest).Result;
 
+            if(teamToCreate == null)
+            {
+                return Conflict();
+            }
+
             return Ok(teamToCreate);
         }
     }
