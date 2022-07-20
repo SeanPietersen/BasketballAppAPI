@@ -27,14 +27,9 @@ namespace BasketballApp.API.Controllers
         }
 
         [HttpGet("{teamId}")]
-        public ActionResult<TeamDto> GetTeamByTeamId([FromRoute] int teamId, bool includePlayers, bool includeCoaches)
+        public ActionResult<ApiResult<TeamDto>> GetTeamByTeamId([FromRoute] int teamId, bool includePlayers, bool includeCoaches)
         {
             var team = _teamContract.GetTeamByTeamId(teamId, includePlayers, includeCoaches).Result;
-
-            if(team == null)
-            {
-                return NotFound();
-            }
 
             return Ok(team);
         }
@@ -43,15 +38,6 @@ namespace BasketballApp.API.Controllers
         public ActionResult<ApiResult<TeamDto>> CreateTeam([FromBody] CreateTeamDto teamRequest)
         {
             var teamToCreate = _teamContract.CreateTeam(teamRequest).Result;
-
-            //if(teamToCreate == null)
-            //{
-            //    return Ok(new ApiResult<TeamDto>()
-            //    {
-            //        IsSuccess = false,
-            //        Errors
-            //    });
-            //}
 
             return Ok(teamToCreate);
         }

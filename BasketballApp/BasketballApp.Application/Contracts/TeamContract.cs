@@ -22,31 +22,57 @@ namespace BasketballApp.Application.Contracts
             return _mapper.Map<IEnumerable<TeamDto>>(teamEntities);
         }
 
-        public async Task<TeamDto> GetTeamByTeamId(int teamId, bool includePlayers = false, bool includeCoaches = false)
+        public async Task<ApiResult<TeamDto>> GetTeamByTeamId(int teamId, bool includePlayers = false, bool includeCoaches = false)
         {
             var team = await _teamRepository.GetTeamByIdAsync(teamId, includePlayers, includeCoaches);
 
             if(team == null)
             {
-                return null;
+                return new ApiResult<TeamDto>()
+                {
+                    IsSuccess = false,
+                    Errors = new string[] { "Team Does Not Exist" }
+                };
             }
             
             if(includePlayers && includeCoaches)
             {
-                return (_mapper.Map<TeamWithPlayersAndCoachesDto>(team));
+                var result = (_mapper.Map<TeamWithPlayersAndCoachesDto>(team));
+                return new ApiResult<TeamDto>()
+                {
+                    IsSuccess = true,
+                    Body = result
+                };
+                
             }
 
             if(includePlayers)
             {
-                return (_mapper.Map<TeamWithPlayersDto>(team));
+                var result = (_mapper.Map<TeamWithPlayersDto>(team));
+                return new ApiResult<TeamDto>()
+                {
+                    IsSuccess = true,
+                    Body = result
+                };
             }
 
             if(includeCoaches)
             {
-                return (_mapper.Map<TeamWithCoachesDto>(team));
+                var result = (_mapper.Map<TeamWithCoachesDto>(team));
+                return new ApiResult<TeamDto>()
+                {
+                    IsSuccess = true,
+                    Body = result
+                };
+
             }
 
-            return (_mapper.Map<TeamDto>(team));
+            var resultTeam = (_mapper.Map<TeamDto>(team)); 
+            return new ApiResult<TeamDto>()
+            {
+                IsSuccess = true,
+                Body = resultTeam
+            };
         }
 
         public async Task<ApiResult<TeamDto>> CreateTeam(CreateTeamDto teamDto)
