@@ -31,23 +31,36 @@ namespace BasketballApp.Application.Contracts
 
         }
 
-        public CoachDto GetCoachByIdForTeam(int teamId, int coachId)
+        public ApiResult<CoachDto> GetCoachByIdForTeam(int teamId, int coachId)
         {
 
             var team = _teamRepository.GetTeamByIdAsync(teamId, false, true).Result;
 
             if (team == null)
             {
-                return null;
+                return new ApiResult<CoachDto>()
+                {
+                    IsSuccess = false,
+                    Errors = new string[] { "Team Does Not Exist" }
+                };
             }
             var coach = _coachRepository.GetCoachByIdForTeamAsync(teamId, coachId).Result;
 
             if (coach == null)
             {
-                return null;
+                return new ApiResult<CoachDto>()
+                {
+                    IsSuccess = false,
+                    Errors = new string[] { "Coach Does Not Exist" }
+                };
             }
 
-            return _mapper.Map<CoachDto>(coach);
+            var result = _mapper.Map<CoachDto>(coach);
+            return new ApiResult<CoachDto>()
+            {
+                IsSuccess = true,
+                Body = result
+            };
         }
     }
 }

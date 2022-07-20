@@ -31,14 +31,9 @@ namespace BasketballApp.API.Controllers
         }
 
         [HttpGet("{coachId}")]
-        public ActionResult<CoachDto> GetCoachByIdForTeam(int teamId, int coachId)
+        public ActionResult<ApiResult<CoachDto>> GetCoachByIdForTeam(int teamId, int coachId)
         {
             var coach = _coachContract.GetCoachByIdForTeam(teamId, coachId);
-
-            if (coach == null)
-            {
-                return NotFound();
-            }
 
             return Ok(coach);
         }
