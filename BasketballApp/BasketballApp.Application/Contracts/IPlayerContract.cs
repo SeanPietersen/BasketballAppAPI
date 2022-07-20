@@ -5,7 +5,7 @@ namespace BasketballApp.Application.Contracts
     public interface IPlayerContract
     {
         IEnumerable<PlayerDto> GetAllPlayersForTeam(int teamId);
-        PlayerDto GetPlayerById(int teamId, int playerId);
+        ApiResult<PlayerDto> GetPlayerById(int teamId, int playerId);
 
     }
 }

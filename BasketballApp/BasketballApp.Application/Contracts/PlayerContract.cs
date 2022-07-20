@@ -29,23 +29,36 @@ namespace BasketballApp.Application.Contracts
             return (_mapper.Map<IEnumerable<PlayerDto>>(players));
         }
 
-        public PlayerDto GetPlayerById(int teamId, int playerId)
+        public ApiResult<PlayerDto> GetPlayerById(int teamId, int playerId)
         {
             var team = _teamRepository.GetTeamByIdAsync(teamId, true, false).Result;
 
             if (team == null)
             {
-                return null;
+                return new ApiResult<PlayerDto>()
+                {
+                    IsSuccess = false,
+                    Errors = new string[] { "Team Does Not Exist" }
+                };
             }
 
             var player = _playerRepository.GetPlayerByIdAsync(teamId, playerId).Result;
 
             if (player == null)
             {
-                return null;
+                return new ApiResult<PlayerDto>()
+                {
+                    IsSuccess = false,
+                    Errors = new string[] { "Player Does Not Exist" }
+                };
             }
 
-            return _mapper.Map<PlayerDto>(player);
+            var result = _mapper.Map<PlayerDto>(player);
+            return new ApiResult<PlayerDto>()
+            {
+                IsSuccess = true,
+                Body = result
+            };
         }
     }
 }
