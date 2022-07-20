@@ -16,18 +16,27 @@ namespace BasketballApp.Application.Contracts
             _coachRepository = coachRepository;
             _mapper = mapper;
         }
-        public IEnumerable<CoachDto> GetAllCoachesForTeam(int teamId)
+        public ApiResult<IEnumerable<CoachDto>> GetAllCoachesForTeam(int teamId)
         {
             var team = _teamRepository.GetTeamByIdAsync(teamId, false, true).Result;
 
             if (team == null)
             {
-                return null;
+                return new ApiResult<IEnumerable<CoachDto>>()
+                {
+                    IsSuccess = false,
+                    Errors = new string[] { "Team Does Not Exist" }
+                };
             }
 
             var coaches = team.Coaches;
 
-            return _mapper.Map<IEnumerable<CoachDto>>(coaches);
+            var result = _mapper.Map<IEnumerable<CoachDto>>(coaches);
+            return new ApiResult<IEnumerable<CoachDto>>()
+            {
+                IsSuccess = true,
+                Body = result
+            };
 
         }
 

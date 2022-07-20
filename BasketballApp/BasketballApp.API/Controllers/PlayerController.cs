@@ -18,14 +18,9 @@ namespace BasketballApp.API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<PlayerDto>> GetAllPlayersForTeam([FromRoute]int teamId)
+        public ActionResult<ApiResult<IEnumerable<PlayerDto>>> GetAllPlayersForTeam([FromRoute]int teamId)
         {
             var players = _playerContract.GetAllPlayersForTeam(teamId);
-
-            if(players == null)
-            {
-                return NotFound();
-            }
 
             return Ok(players);
         }
