@@ -25,19 +25,28 @@ namespace BasketballApp.Application.Contracts
             return _mapper.Map<IEnumerable<UserDto>>(userEntities);
         }
 
-        public async Task<UserDto> GetUserById(int userId)
+        public async Task<ApiResult<UserDto>> GetUserById(int userId)
         {
             var user = await _userRepository.GetUserByIdAsync(userId);
 
             if (user == null)
             {
-                return null;
+                return new ApiResult<UserDto> ()
+                {
+                    IsSuccess = false,
+                    Errors = new string[] { "Team Does Not Exist" }
+                };
             }
 
-            return (_mapper.Map<UserDto>(user));
+            var result = (_mapper.Map<UserDto>(user));
+            return new ApiResult<UserDto>()
+            {
+                IsSuccess = true,
+                Body = result
+            };
         }
 
-        public async Task<UserDto> RegisterUser(RegisterUserDto userDto)
+        public async Task<ApiResult<UserDto>> RegisterUser(RegisterUserDto userDto)
         {
             //check if email exists
             var userEmailCheck = await _userRepository.GetUserByEmailAsync(userDto.Email);
@@ -45,7 +54,11 @@ namespace BasketballApp.Application.Contracts
             if (userEmailCheck != null)
             {
                 // email exists
-                return null;
+                return new ApiResult<UserDto>()
+                {
+                    IsSuccess = false,
+                    Errors = new string[] { "Email Does Not Exist" }
+                };
             }
 
             //creating a user
@@ -59,10 +72,15 @@ namespace BasketballApp.Application.Contracts
 
             await _userRepository.RegisterUserAsync(createdUser);
 
-            return _mapper.Map<UserDto>(createdUser);
+            var result = _mapper.Map<UserDto>(createdUser);
+            return new ApiResult<UserDto>()
+            {
+                IsSuccess = true,
+                Body = result
+            };
         }
 
-        public async Task<UserIdentityDto> UserSigIn(UserSignInDto userDto)
+        public async Task<ApiResult<UserIdentityDto>> UserSigIn(UserSignInDto userDto)
         {
             //check if email exists
             var userEmailCheck = await _userRepository.GetUserByEmailAsync(userDto.Email);
@@ -70,13 +88,21 @@ namespace BasketballApp.Application.Contracts
             if (userEmailCheck == null)
             {
                 // email/username doesnt exists
-                return null;
+                return new ApiResult<UserIdentityDto>()
+                {
+                    IsSuccess = false,
+                    Errors = new string[] { "Username or password is incorrect" }
+                };
             }
 
             //check if password matches email
             if (userEmailCheck.Password != userDto.Password)
             {
-                return null;
+                return new ApiResult<UserIdentityDto>()
+                {
+                    IsSuccess = false,
+                    Errors = new string[] { "Username or password is incorrect" }
+                };
             }
 
             var user = new User()
@@ -89,10 +115,16 @@ namespace BasketballApp.Application.Contracts
 
             var identityToken = _jwtService.GenerateIdentityToken(userDtoToReturn);
 
-            return new UserIdentityDto()
+            var result =  new UserIdentityDto()
             {
                 User = userDtoToReturn,
                 IdentityToken = identityToken
+            };
+
+            return new ApiResult<UserIdentityDto>()
+            {
+                IsSuccess = true,
+                Body = result
             };
         }
     }
