@@ -18,27 +18,17 @@ namespace BasketballApp.API.Controllers
         }
 
         [HttpPost("register")]
-        public ActionResult<UserDto> RegisterUser([FromBody] RegisterUserDto userDto)
+        public ActionResult<ApiResult<UserDto>> RegisterUser([FromBody] RegisterUserDto userDto)
         {
             var user = _userContract.RegisterUser(userDto).Result;
-
-            if (user == null)
-            {
-                return Conflict();
-            }
 
             return Ok(user);
         }
 
         [HttpPost("signin")]
-        public ActionResult<UserIdentityDto> UserSignIn([FromBody] UserSignInDto userDto)
+        public ActionResult<ApiResult<UserIdentityDto>> UserSignIn([FromBody] UserSignInDto userDto)
         {
             var user = _userContract.UserSigIn(userDto).Result;
-
-            if (user == null)
-            {
-                return NotFound();
-            }
 
             return Ok(user);
         }
@@ -55,14 +45,9 @@ namespace BasketballApp.API.Controllers
 
         [Authorize]
         [HttpGet("{userId}")]
-        public ActionResult<UserDto> GetUserById(int userId)
+        public ActionResult<ApiResult<UserDto>> GetUserById(int userId)
         {
             var user = _userContract.GetUserById(userId).Result;
-
-            if (user == null)
-            {
-                return NotFound();
-            }
 
             return Ok(user);
         }
