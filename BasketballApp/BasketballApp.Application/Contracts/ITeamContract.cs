@@ -7,6 +7,7 @@ namespace BasketballApp.Application.Contracts
         Task<IEnumerable<TeamDto>> GetAllTeams();
         Task <ApiResult<TeamDto>> GetTeamByTeamId(int teamId, bool includePlayers = false, bool includeCoaches = false);
         Task<ApiResult<TeamDto>> CreateTeam(CreateTeamDto teamDto);
+        Task<ApiResult<TeamDto>> DeleteTeam(int teamId);
 
     }
 }

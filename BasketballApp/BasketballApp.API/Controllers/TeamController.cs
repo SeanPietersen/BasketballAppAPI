@@ -41,5 +41,13 @@ namespace BasketballApp.API.Controllers
 
             return Ok(teamToCreate);
         }
+
+        [HttpDelete("{teamId}")]
+        public ActionResult<ApiResult<TeamDto>> DeleteTeam([FromRoute] int teamId)
+        {
+            var teamToDelete = _teamContract.DeleteTeam(teamId).Result;
+
+            return Ok(teamToDelete);
+        }
     }
 }

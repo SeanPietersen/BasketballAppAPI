@@ -8,5 +8,7 @@ namespace BasketballApp.Infrustructure.Services.Repositories
         Task<Team> GetTeamByIdAsync(int teamId, bool includePlayers = false, bool includeCoaches = false);
         Task<Team> CreateTeamAsync(Team team);
         Task<Team> GetTeamByNameAsync(string name);
+        void DeleteTeamAsync(Team team);
+        Task<bool> SaveChangesAsync();
     }
 }

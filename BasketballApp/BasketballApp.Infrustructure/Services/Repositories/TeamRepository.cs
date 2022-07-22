@@ -63,5 +63,15 @@ namespace BasketballApp.Infrustructure.Services.Repositories
                 throw;
             }
         }
+
+        public void DeleteTeamAsync(Team team)
+        {
+            _context.Teams.Remove(team);
+        }
+
+        public async Task<bool> SaveChangesAsync()
+        {
+            return (await _context.SaveChangesAsync() >= 0);
+        }
     }
 }

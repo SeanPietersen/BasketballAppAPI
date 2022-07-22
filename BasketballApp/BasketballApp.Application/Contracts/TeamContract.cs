@@ -105,5 +105,33 @@ namespace BasketballApp.Application.Contracts
                 Body = createdTeamResult
             };
         }
+
+        public async Task<ApiResult<TeamDto>> DeleteTeam(int teamId)
+        {
+            var teamEntity = await _teamRepository.GetTeamByIdAsync(teamId);
+            
+            if(teamEntity == null)
+            {
+                return new ApiResult<TeamDto>()
+                {
+                    IsSuccess = false,
+                    Errors = new string[] { "Team Does Not Exist" }
+                };
+            }
+
+            _teamRepository.DeleteTeamAsync(teamEntity);
+
+            await _teamRepository.SaveChangesAsync();
+
+            var team = new TeamDto();
+
+            var result = _mapper.Map(teamEntity, team);
+
+            return new ApiResult<TeamDto>()
+            {
+                IsSuccess = true,
+                Body = result
+            };
+        }
     }
 }
